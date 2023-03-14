@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./NavBar.scss";
 
 const NarBar = () => {
@@ -9,6 +9,7 @@ const NarBar = () => {
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
   };
+  const { pathname } = useLocation();
 
   useEffect(() => {
     window.addEventListener("scroll", isActive);
@@ -24,7 +25,7 @@ const NarBar = () => {
   };
 
   return (
-    <div className={active ? "navbar active" : "navbar"}>
+    <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
           <Link to="/" className="link">
@@ -50,25 +51,61 @@ const NarBar = () => {
                 <div className="options">
                   {currentUser?.isSeller && (
                     <>
-                      <span>Gigs</span>
-                      <span>Add Gigs</span>
+                      <Link to="/mygigs" className="link">
+                        Gigs
+                      </Link>
+                      <Link to="/add" className="link">
+                        Add Gigs
+                      </Link>
                     </>
                   )}
-                  <span>Orders</span>
-                  <span>Messages</span>
-                  <span>Logout</span>
+                  <Link to="/orders" className="link">
+                    Orders
+                  </Link>
+                  <Link to="/messages" className="link">
+                    Messages
+                  </Link>
+                  <Link to="/" className="link">
+                    Logout
+                  </Link>
                 </div>
               )}
             </div>
           )}
         </div>
       </div>
-      {active && (
+      {(active || pathname !== "/") && (
         <>
           <hr />
           <div className="menu">
-            <span>Test</span>
-            <span>Test</span>
+            <Link to="/" className="link menuLink">
+              Graphics & Design
+            </Link>
+            <Link to="/" className="link menuLink">
+              Video & Animation
+            </Link>
+            <Link to="/" className="link menuLink">
+              Writing & Translation
+            </Link>
+            <Link to="/" className="link menuLink">
+              AI Services
+            </Link>
+            <Link to="/" className="link menuLink">
+              Digital Marketing
+            </Link>
+            <Link to="/" className="link menuLink">
+              Music & Audio
+            </Link>
+            <Link to="/" className="link menuLink">
+              Programming & Tech
+            </Link>
+
+            <Link to="/" className="link menuLink">
+              Business
+            </Link>
+            <Link to="/" className="link menuLink">
+              Lifestyle
+            </Link>
           </div>
         </>
       )}
